@@ -1,0 +1,35 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'homework1'
+version = '1.0'
+
+description = ""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+
+repositories {
+    maven { url "http://repo.maven.apache.org/maven2" }
+    mavenLocal()
+}
+
+dependencies {
+    compile group: 'commons-lang', name: 'commons-lang', version:'2.6'
+}
+
+//create a single Jar with all dependencies
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File Example',
+                'Implementation-Version': version,
+                'Main-Class': 'package1.package2.package3.SimpleIsNumberCheck'
+    }
+    baseName = project.name + '-jar-with-dependencies'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+
