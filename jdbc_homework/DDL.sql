@@ -10,7 +10,8 @@ CREATE TABLE users
 -- Table: roles
 CREATE TABLE roles (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-  name VARCHAR(255) NOT NULL
+  name VARCHAR(255) NOT NULL,
+  permissions VARCHAR(255) NOT NULL DEFAULT '0555'
 );
 
 -- Table: for mapping user and roles: user_roles
