@@ -1,13 +1,16 @@
 package com;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class PersonController extends HttpServlet {
   private List<Person> personList = new ArrayList(Arrays.asList(new Person("xxx", 12, 1),
@@ -44,7 +47,7 @@ public class PersonController extends HttpServlet {
 
   private void serveDefaultUserAction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     req.setAttribute("persons", personList);
-    if (errorMessage != null && !errorMessage.equals("")) {
+    if (StringUtils.isNotEmpty(errorMessage)) {
       req.setAttribute("message", errorMessage);
       errorMessage = "";
     }
@@ -115,6 +118,10 @@ public class PersonController extends HttpServlet {
 
   private boolean isNameValid(String name) {
     return name.matches("[a-zA-Z]+");
+  }
+
+  private boolean isIdValid(String name) {
+    return name.matches("[0-9]+");
   }
 
   private boolean isAgeValid(int age) {
